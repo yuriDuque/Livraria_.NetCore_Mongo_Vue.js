@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrudLivro", "CrudLivro\CrudLivro.csproj", "{0F6E8FA1-73EB-4398-947B-CC3CA2F1B2FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrudLivro", "CrudLivro\CrudLivro.csproj", "{0F6E8FA1-73EB-4398-947B-CC3CA2F1B2FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{B47F0337-8DA1-4A52-8EBD-4A5727B187B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{B47F0337-8DA1-4A52-8EBD-4A5727B187B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryMongo", "RepositoryMongo\RepositoryMongo.csproj", "{8A3821FC-D79C-49FF-A090-A169968E1BC4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorySQL", "RepositorySQL\RepositorySQL.csproj", "{E514EE71-0878-495E-830E-190AC19E50F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryMongo", "RepositoryMongo\RepositoryMongo.csproj", "{8A3821FC-D79C-49FF-A090-A169968E1BC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{8A3821FC-D79C-49FF-A090-A169968E1BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A3821FC-D79C-49FF-A090-A169968E1BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A3821FC-D79C-49FF-A090-A169968E1BC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E514EE71-0878-495E-830E-190AC19E50F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E514EE71-0878-495E-830E-190AC19E50F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E514EE71-0878-495E-830E-190AC19E50F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E514EE71-0878-495E-830E-190AC19E50F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

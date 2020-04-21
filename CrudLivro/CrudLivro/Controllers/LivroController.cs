@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using Domain;
+﻿using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
-using RepositoryMongo;
+using RepositoryMongo.Repository;
+using System.Linq;
 
 namespace CrudLivro.Controllers
 {
@@ -10,19 +9,21 @@ namespace CrudLivro.Controllers
     [ApiController]
     public class LivroController : ControllerBase
     {
-        MongoContext _mongoDB;
-        IMongoCollection<Livro> _livroCollection;
+        private readonly IMongoRepository<Livro> _livroRepository;
 
-        public LivroController(MongoContext mongoDB)
+        public LivroController(IMongoRepository<Livro> livroRepository)
         {
-            _mongoDB = mongoDB;
-            _livroCollection = _mongoDB.DB.GetCollection<Livro>(typeof(Livro).Name.ToLower());
+            _livroRepository = livroRepository;
         }
 
         [HttpPost]
-        public ActionResult SalvarInfectado([FromBody] Livro livro)
+        public ActionResult SalvarInfectado()
         {
-            _livroCollection.InsertOne(livro);
+            var livro = new Livro();
+            livro.Titulo = "Teste";
+            livro.Alugado = true;
+
+            _livroRepository.InsertOne(livro);
             
             return StatusCode(201, "Infectado adicionado com sucesso");
         }
@@ -30,9 +31,9 @@ namespace CrudLivro.Controllers
         [HttpGet]
         public ActionResult ObterInfectados()
         {
-            var infectados = _livroCollection.Find(Builders<Livro>.Filter.Empty).ToList();
-            
-            return Ok(infectados);
+            var ivros = _livroRepository.GetAll().ToList();
+
+            return Ok(ivros);
         }
     }
 }

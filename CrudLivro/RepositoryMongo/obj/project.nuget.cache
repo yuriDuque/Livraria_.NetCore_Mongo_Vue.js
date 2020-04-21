@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "NEaCe0cLM/LOrnrinwEicIEk9APYsR14wlW7MEZH4q9YuGd8T2jIVDidliJStiQ/WQYfsbjnZOP4QNgfizWLYg==",
+  "dgSpecHash": "M9RtovLhDRC5Ckc0kN6+KlawzD/aehu+Jb+IVcdLZDMJuL3ZaDq8i2Cep14937pT2HYa+OrvHxhjXn/nwU8+xw==",
   "success": true,
   "projectFilePath": "D:\\Projetos\\Livraria_.NetCore_Mongo_Vue.js\\CrudLivro\\RepositoryMongo\\RepositoryMongo.csproj",
   "expectedPackageFiles": [

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Domain.Utils;
 
-namespace Domain
+namespace Domain.Models
 {
-    public class Livro
+    [BsonCollection("cliente")]
+    public class Livro : Document
     {
-        public int Id { get; set; }
         public string Titulo { get; set; }
         public bool Alugado { get; set; }
 

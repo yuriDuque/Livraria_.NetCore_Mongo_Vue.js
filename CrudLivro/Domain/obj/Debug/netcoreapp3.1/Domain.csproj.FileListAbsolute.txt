@@ -2,8 +2,8 @@ D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\Domain\bin\Debug\netcoreapp
 D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\Domain\bin\Debug\netcoreapp3.1\Domain.dll
 D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\Domain\bin\Debug\netcoreapp3.1\Domain.pdb
 D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\Domain\obj\Debug\netcoreapp3.1\Domain.csprojAssemblyReference.cache
-D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\Domain\obj\Debug\netcoreapp3.1\Domain.csproj.CoreCompileInputs.cache
 D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\Domain\obj\Debug\netcoreapp3.1\Domain.AssemblyInfoInputs.cache
 D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\Domain\obj\Debug\netcoreapp3.1\Domain.AssemblyInfo.cs
 D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\Domain\obj\Debug\netcoreapp3.1\Domain.dll
 D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\Domain\obj\Debug\netcoreapp3.1\Domain.pdb
+D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\Domain\obj\Debug\netcoreapp3.1\Domain.csproj.CoreCompileInputs.cache

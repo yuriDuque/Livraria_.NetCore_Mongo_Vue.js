@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Domain.Utils;
+using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Domain
+namespace Domain.Models
 {
-    public class Cliente
+    [BsonCollection("cliente")]
+    public class Cliente : Document
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public string CPF { get; set; }
         public DateTime DataNascimento { get; set; }

@@ -1,6 +1,4 @@
-﻿using Domain;
-using Microsoft.Extensions.Configuration;
-using MongoDB.Bson.Serialization;
+﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using RepositoryMongo.Map;

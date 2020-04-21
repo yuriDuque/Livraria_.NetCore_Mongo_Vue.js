@@ -8,5 +8,5 @@ D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\RepositoryMongo\obj\Debug\n
 D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\RepositoryMongo\obj\Debug\netcoreapp3.1\RepositoryMongo.pdb
 D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\RepositoryMongo\bin\Debug\netcoreapp3.1\Domain.dll
 D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\RepositoryMongo\bin\Debug\netcoreapp3.1\Domain.pdb
-D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\RepositoryMongo\obj\Debug\netcoreapp3.1\RepositoryMongo.csproj.CoreCompileInputs.cache
 D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\RepositoryMongo\obj\Debug\netcoreapp3.1\RepositoryMongo.csproj.CopyComplete
+D:\Projetos\Livraria_.NetCore_Mongo_Vue.js\CrudLivro\RepositoryMongo\obj\Debug\netcoreapp3.1\RepositoryMongo.csproj.CoreCompileInputs.cache
