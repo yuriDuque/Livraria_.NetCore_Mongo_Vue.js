@@ -2,9 +2,9 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 
-namespace Domain
+namespace Domain.Utils
 {
-    public abstract class Document
+    public abstract class Document : IDocument
     {
         [BsonId]
         public ObjectId Id { get; set; }

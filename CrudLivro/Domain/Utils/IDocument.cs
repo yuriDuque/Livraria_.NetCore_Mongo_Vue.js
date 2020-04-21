@@ -2,7 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 
-namespace RepositoryMongo
+namespace Domain.Utils
 {
     public interface IDocument
     {

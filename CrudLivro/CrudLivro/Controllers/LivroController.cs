@@ -16,21 +16,21 @@ namespace CrudLivro.Controllers
             _livroService = new LivroService(livroRepository);
         }
 
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            return Ok(_livroService.GetAll());
+        }
+
         [HttpPost]
-        public ActionResult SalvarInfectado([FromBody] Livro livro)
+        public ActionResult Save([FromBody] Livro livro)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Erro ao montar o objeto");
 
             _livroService.Save(livro);
-            
-            return StatusCode(201, "Infectado adicionado com sucesso");
-        }
 
-        [HttpGet]
-        public ActionResult ObterInfectados()
-        {
-            return Ok(_livroService.GetAll());
+            return StatusCode(201, "Infectado adicionado com sucesso");
         }
     }
 }

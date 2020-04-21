@@ -1,5 +1,4 @@
-﻿using Domain;
-using Domain.Utils;
+﻿using Domain.Utils;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -16,7 +15,7 @@ namespace RepositoryMongo.Repository
     /// https://medium.com/@marekzyla95/mongo-repository-pattern-700986454a0e
     /// </summary>
     /// <typeparam name="TDocument"></typeparam>
-    public class MongoRepository<TDocument> : IMongoRepository<TDocument> where TDocument : Document
+    public class MongoRepository<TDocument> : IMongoRepository<TDocument> where TDocument : IDocument
     {
         MongoContext _mongoDB;
         private readonly IMongoCollection<TDocument> _collection;

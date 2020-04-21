@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using Domain.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RepositoryMongo.Repository
 {
-    public interface IMongoRepository<TDocument> where TDocument : Document
+    public interface IMongoRepository<TDocument> where TDocument : IDocument
     {
         IQueryable<TDocument> GetAll();
 
