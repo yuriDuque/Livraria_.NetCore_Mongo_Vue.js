@@ -7,8 +7,8 @@ namespace Domain.Utils
     public abstract class Document : IDocument
     {
         [BsonId]
-        public ObjectId Id { get; set; }
+        public long Id { get; set; }
 
-        public DateTime CreatedAt => Id.CreationTime;
+        public DateTime CreatedAt { get; }
     }
 }

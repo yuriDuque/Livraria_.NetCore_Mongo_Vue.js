@@ -22,29 +22,29 @@ namespace RepositoryMongo.Repository
 
         Task<TDocument> FindOneAsync(Expression<Func<TDocument, bool>> filterExpression);
 
-        TDocument FindById(string id);
+        TDocument FindById(long id);
 
-        Task<TDocument> FindByIdAsync(string id);
+        Task<TDocument> FindByIdAsync(long id);
 
-        void InsertOne(TDocument document);
+        void Save(TDocument document);
 
-        Task InsertOneAsync(TDocument document);
+        Task SaveAsync(TDocument document);
 
-        void InsertMany(ICollection<TDocument> documents);
+        void SaveMany(ICollection<TDocument> documents);
 
-        Task InsertManyAsync(ICollection<TDocument> documents);
+        Task SaveManyAsync(ICollection<TDocument> documents);
 
-        void ReplaceOne(TDocument document);
+        void Update(TDocument document);
 
-        Task ReplaceOneAsync(TDocument document);
+        Task UpdateAsync(TDocument document);
 
         void DeleteOne(Expression<Func<TDocument, bool>> filterExpression);
 
         Task DeleteOneAsync(Expression<Func<TDocument, bool>> filterExpression);
 
-        void DeleteById(string id);
+        void DeleteById(long id);
 
-        Task DeleteByIdAsync(string id);
+        Task DeleteByIdAsync(long id);
 
         void DeleteMany(Expression<Func<TDocument, bool>> filterExpression);
 

@@ -14,14 +14,29 @@ namespace Service.ModelsService
             _livroRepository = livroRepository;
         }
 
-        public void Save(Livro livro)
-        {
-            _livroRepository.InsertOne(livro);
-        }
-
         public IList<Livro> GetAll()
         {
             return _livroRepository.GetAll().ToList();
+        }
+
+        public Livro GetById(long id)
+        {
+            return _livroRepository.FindById(id);
+        }
+
+        public void Save(Livro livro)
+        {
+            _livroRepository.Save(livro);
+        }
+
+        public void Update(Livro livro)
+        {
+            _livroRepository.Update(livro);
+        }
+
+        public void Delete(long id)
+        {
+            _livroRepository.DeleteById(id);
         }
     }
 }

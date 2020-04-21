@@ -17,14 +17,9 @@ namespace RepositoryMongo.Repository
     /// <typeparam name="TDocument"></typeparam>
     public class MongoRepository<TDocument> : IMongoRepository<TDocument> where TDocument : IDocument
     {
-        MongoContext _mongoDB;
+        #region Private
+        private MongoContext _mongoDB;
         private readonly IMongoCollection<TDocument> _collection;
-
-        public MongoRepository(MongoContext mongoDB)
-        {
-            _mongoDB = mongoDB;
-            _collection = _mongoDB.DB.GetCollection<TDocument>(GetCollectionName(typeof(TDocument)));
-        }
 
         private protected string GetCollectionName(Type documentType)
         {
@@ -34,12 +29,35 @@ namespace RepositoryMongo.Repository
                 .FirstOrDefault())?.CollectionName;
         }
 
+        private long GetLastId()
+        {
+            var item = _collection.Find(FilterDefinition<TDocument>.Empty).SortByDescending(x => x.Id).FirstOrDefault();
+
+            if (item == null)
+                return 1;
+
+            return item.Id + 1;
+        } 
+
+        #endregion
+
+
+
+        public MongoRepository(MongoContext mongoDB)
+        {
+            _mongoDB = mongoDB;
+            _collection = _mongoDB.DB.GetCollection<TDocument>(GetCollectionName(typeof(TDocument)));
+        }
+
+        #region Get
+
         public virtual IQueryable<TDocument> GetAll()
         {
             return _collection.AsQueryable();
         }
 
         // var people = _peopleRepository.FilterBy(filter => filter.FirstName != "test");
+        //
         public virtual IEnumerable<TDocument> FilterBy(
             Expression<Func<TDocument, bool>> filterExpression)
         {
@@ -65,74 +83,89 @@ namespace RepositoryMongo.Repository
             return Task.Run(() => _collection.Find(filterExpression).FirstOrDefaultAsync());
         }
 
-        public virtual TDocument FindById(string id)
+        public virtual TDocument FindById(long id)
         {
-            var objectId = new ObjectId(id);
-            var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
+            var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, id);
             return _collection.Find(filter).SingleOrDefault();
         }
 
-        public virtual Task<TDocument> FindByIdAsync(string id)
+        public virtual Task<TDocument> FindByIdAsync(long id)
         {
             return Task.Run(() =>
             {
-                var objectId = new ObjectId(id);
-                var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
+                var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, id);
                 return _collection.Find(filter).SingleOrDefaultAsync();
             });
         }
 
+        #endregion
 
-        // _peopleRepository.InsertOne(person);
-        public virtual void InsertOne(TDocument document)
+
+
+        #region Save
+
+        public virtual void Save(TDocument document)
         {
-            document.Id = ObjectId.GenerateNewId();
+            document.Id = GetLastId();
 
             _collection.InsertOne(document);
         }
 
-        // await _peopleRepository.InsertOneAsync(person);
-        public virtual Task InsertOneAsync(TDocument document)
+        public virtual Task SaveAsync(TDocument document)
         {
-            document.Id = ObjectId.GenerateNewId();
+            document.Id = GetLastId();
 
             return Task.Run(() => _collection.InsertOneAsync(document));
         }
 
-        public void InsertMany(ICollection<TDocument> documents)
+        public void SaveMany(ICollection<TDocument> documents)
         {
+            var id = GetLastId();
+
             foreach (var item in documents)
             {
-                item.Id = ObjectId.GenerateNewId();
+                item.Id = id;
+                id++;
             }
 
             _collection.InsertMany(documents);
         }
 
-
-        public virtual async Task InsertManyAsync(ICollection<TDocument> documents)
+        public virtual async Task SaveManyAsync(ICollection<TDocument> documents)
         {
+            var id = GetLastId();
+
             foreach (var item in documents)
             {
-                item.Id = ObjectId.GenerateNewId();
+                item.Id = id;
+                id++;
             }
 
             await _collection.InsertManyAsync(documents);
         }
 
-        // update
-        public void ReplaceOne(TDocument document)
+        #endregion
+
+
+
+        #region Update
+
+        public void Update(TDocument document)
         {
-            var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, document.Id);
-            _collection.FindOneAndReplace(filter, document);
+            _collection.FindOneAndReplace(x => x.Id == document.Id, document);
         }
 
-        // update
-        public virtual async Task ReplaceOneAsync(TDocument document)
+        public virtual async Task UpdateAsync(TDocument document)
         {
-            var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, document.Id);
-            await _collection.FindOneAndReplaceAsync(filter, document);
+            await _collection.FindOneAndReplaceAsync(x => x.Id == document.Id, document);
         }
+
+        #endregion
+
+
+
+
+        #region Delete
 
         public void DeleteOne(Expression<Func<TDocument, bool>> filterExpression)
         {
@@ -144,20 +177,16 @@ namespace RepositoryMongo.Repository
             return Task.Run(() => _collection.FindOneAndDeleteAsync(filterExpression));
         }
 
-        public void DeleteById(string id)
+        public void DeleteById(long id)
         {
-            var objectId = new ObjectId(id);
-            var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
-            _collection.FindOneAndDelete(filter);
+            _collection.FindOneAndDelete(x => x.Id == id);
         }
 
-        public Task DeleteByIdAsync(string id)
+        public Task DeleteByIdAsync(long id)
         {
             return Task.Run(() =>
             {
-                var objectId = new ObjectId(id);
-                var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
-                _collection.FindOneAndDeleteAsync(filter);
+                _collection.FindOneAndDeleteAsync(x => x.Id == id);
             });
         }
 
@@ -170,5 +199,7 @@ namespace RepositoryMongo.Repository
         {
             return Task.Run(() => _collection.DeleteManyAsync(filterExpression));
         }
+
+        #endregion
     }
 }
