@@ -7,13 +7,13 @@ namespace CrudLivro.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LivroController : ControllerBase
+    public class ClienteController : ControllerBase
     {
-        private readonly ILivroService _livroService;
+        private readonly IClienteService _clienteService;
 
-        public LivroController(ILivroService livroService)
+        public ClienteController(IClienteService clienteService)
         {
-            _livroService = livroService;
+            _clienteService = clienteService;
         }
 
         [HttpGet]
@@ -21,7 +21,7 @@ namespace CrudLivro.Controllers
         {
             try
             {
-                return Ok(_livroService.GetAll());
+                return Ok(_clienteService.GetAll());
             }
             catch (Exception ex)
             {
@@ -30,16 +30,16 @@ namespace CrudLivro.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save([FromBody] Livro livro)
+        public ActionResult Save([FromBody] Cliente cliente)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest("Erro ao montar o objeto");
 
-                _livroService.Save(livro);
+                _clienteService.Save(cliente);
 
-                return StatusCode(201, "Livro adicionado com sucesso");
+                return StatusCode(201, "Cliente adicionado com sucesso");
             }
             catch (Exception ex)
             {
@@ -48,16 +48,16 @@ namespace CrudLivro.Controllers
         }
 
         [HttpPut]
-        public ActionResult Update([FromBody] Livro livro)
+        public ActionResult Update([FromBody] Cliente cliente)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest("Erro ao montar o objeto");
 
-                _livroService.Update(livro);
+                _clienteService.Update(cliente);
 
-                return StatusCode(201, "Livro atualizado com sucesso");
+                return StatusCode(201, "Cliente atualizado com sucesso");
             }
             catch (Exception ex)
             {
@@ -70,14 +70,14 @@ namespace CrudLivro.Controllers
         {
             try
             {
-                var livro = _livroService.GetById(id);
+                var cliente = _clienteService.GetById(id);
 
-                if (livro == null)
-                    return BadRequest("Livro não encontrado");
+                if (cliente == null)
+                    return BadRequest("Cliente não encontrado");
 
-                _livroService.Delete(id);
+                _clienteService.Delete(id);
 
-                return StatusCode(201, "Livro deletado com sucesso");
+                return StatusCode(201, "Cliente deletado com sucesso");
             }
             catch (Exception ex)
             {

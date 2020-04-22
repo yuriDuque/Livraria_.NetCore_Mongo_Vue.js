@@ -2,7 +2,7 @@
 
 namespace Domain.Models
 {
-    [BsonCollection("cliente")]
+    [BsonCollection("livro")]
     public class Livro : Document
     {
         public string Titulo { get; set; }
