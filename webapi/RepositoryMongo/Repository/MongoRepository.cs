@@ -46,7 +46,8 @@ namespace RepositoryMongo.Repository
         public MongoRepository(MongoContext mongoDB)
         {
             _mongoDB = mongoDB;
-            _collection = _mongoDB.DB.GetCollection<TDocument>(GetCollectionName(typeof(TDocument)));
+            string collectionName = GetCollectionName(typeof(TDocument));
+            _collection = _mongoDB.DB.GetCollection<TDocument>(collectionName);
         }
 
         #region Get

@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RepositoryMongo;
 using RepositoryMongo.Repository;
+using Service;
+using Service.ModelsService;
 
 namespace CrudLivro
 {
@@ -16,16 +18,22 @@ namespace CrudLivro
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // Singleton - cria uma instancia e toda vez que for chamada, usará a mesma instancia
             services.AddSingleton<MongoContext>();
-            services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+
+            // Scoped - cria uma instancia por requisição dentro do escopo
+            services.AddSingleton(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+
+            // Transiente - cria um objeto do servico toda vez que um objeto for requisitado
+            services.AddTransient(typeof(ILivroService), typeof(LivroService));
+            services.AddTransient(typeof(IClienteService), typeof(ClienteService));
 
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseHttpsRedirection();

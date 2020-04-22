@@ -5,7 +5,16 @@ using System.Linq;
 
 namespace Service.ModelsService
 {
-    public class LivroService
+    public interface ILivroService
+    {
+        IList<Livro> GetAll();
+        Livro GetById(long id);
+        void Save(Livro livro);
+        void Update(Livro livro);
+        void Delete(long id);
+    }
+
+    public class LivroService : ILivroService
     {
         private readonly IMongoRepository<Livro> _livroRepository;
 
