@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RepositoryMongo;
 using RepositoryMongo.Repository;
-using Service;
+using RepositoryMongo.Repository.ModelsRepository;
 using Service.ModelsService;
 
 namespace CrudLivro
@@ -24,12 +24,23 @@ namespace CrudLivro
             // Singleton - cria uma instancia e toda vez que for chamada, usará a mesma instancia
             services.AddSingleton<MongoContext>();
 
+            #region Repository
+
             // Scoped - cria uma instancia por requisição dentro do escopo
-            services.AddSingleton(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+            services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+
+            services.AddScoped<ClienteRepository>();
+            services.AddScoped<LivroRepository>();
+
+            #endregion
+
+            #region Service
 
             // Transiente - cria um objeto do servico toda vez que um objeto for requisitado
             services.AddTransient(typeof(ILivroService), typeof(LivroService));
             services.AddTransient(typeof(IClienteService), typeof(ClienteService));
+
+            #endregion
 
             services.AddControllers();
         }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Service.ModelsService;
 using System;
+using System.Linq;
 
 namespace CrudLivro.Controllers
 {
@@ -29,13 +30,31 @@ namespace CrudLivro.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public ActionResult GetById(long id)
+        {
+            try
+            {
+                var livro = _clienteService.GetById(id);
+
+                if (livro == null)
+                    return NotFound("Cliente não encontrado");
+
+                return Ok(livro);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Erro ao buscar, " + ex.Message);
+            }
+        }
+
         [HttpPost]
         public ActionResult Save([FromBody] Cliente cliente)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest("Erro ao montar o objeto");
+                    return BadRequest(ModelState.Values.Select(x => x.Errors));
 
                 _clienteService.Save(cliente);
 
@@ -47,17 +66,22 @@ namespace CrudLivro.Controllers
             }
         }
 
-        [HttpPut]
-        public ActionResult Update([FromBody] Cliente cliente)
+        [HttpPut("{id}")]
+        public ActionResult Update([FromBody] Cliente cliente, long id)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest("Erro ao montar o objeto");
+                    return BadRequest(ModelState.Values.Select(x => x.Errors));
+
+                var clienteBase = _clienteService.GetById(id);
+
+                if (clienteBase == null)
+                    return NotFound("Cliente não encontrado");
 
                 _clienteService.Update(cliente);
 
-                return StatusCode(201, "Cliente atualizado com sucesso");
+                return Ok("Cliente atualizado com sucesso");
             }
             catch (Exception ex)
             {
@@ -65,15 +89,15 @@ namespace CrudLivro.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public ActionResult Delete(long id)
         {
             try
             {
-                var cliente = _clienteService.GetById(id);
+                var livro = _clienteService.GetById(id);
 
-                if (cliente == null)
-                    return BadRequest("Cliente não encontrado");
+                if (livro == null)
+                    return NotFound("Cliente não encontrado");
 
                 _clienteService.Delete(id);
 
