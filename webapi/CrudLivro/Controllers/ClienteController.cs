@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.ModelsService;
 using System;
@@ -17,6 +18,7 @@ namespace CrudLivro.Controllers
             _clienteService = clienteService;
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult GetAll()
         {

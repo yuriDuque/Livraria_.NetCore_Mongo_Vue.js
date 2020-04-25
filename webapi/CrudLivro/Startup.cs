@@ -1,11 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using RepositoryMongo;
 using RepositoryMongo.Repository;
 using RepositoryMongo.Repository.ModelsRepository;
 using Service.ModelsService;
+using System.Text;
 
 namespace CrudLivro
 {
@@ -42,13 +45,48 @@ namespace CrudLivro
 
             #endregion
 
+            #region Token
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = true;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(key), // chave de assinatura do emissor
+                    ValidateIssuerSigningKey = true, // verifica se dentro do token o emissor é o que foi informado
+
+                    ValidIssuer = appSettings.Emissor,
+                    ValidateIssuer = true, // valida o emissor
+
+                    ValidAudience = appSettings.ValidoEm,
+                    ValidateAudience = true, // valida se o token é valido em "validoEm"
+                };
+            });
+
+            #endregion
+
             services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseHttpsRedirection();
+
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
