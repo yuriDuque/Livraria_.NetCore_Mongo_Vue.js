@@ -43,37 +43,40 @@ namespace Service.ModelsService
         public async Task SaveAsync(Livro livro)
         {
             var livrosExistentes = await GetByTituloAsync(livro.Titulo);
+
             if (livrosExistentes != null && livrosExistentes.Any())
                 throw new Exception("Já existe um livro cadastrado com esse titulo");
 
             livro.DataCadastro = DateTime.Now;
 
-            _ = _livroRepository.SaveAsync(livro);
+            await _livroRepository.SaveAsync(livro);
         }
 
         public async Task UpdateAsync(Livro livro)
         {
             var livroBase = await GetByIdAsync(livro.Id);
+            var livrosExistentes = await GetByTituloAsync(livro.Titulo);
+
             if (livroBase == null)
                 throw new Exception("Não é possivel atualizar o livro, o livro não está cadastrado");
 
-            var livrosExistentes = await GetByTituloAsync(livro.Titulo);
             if (livrosExistentes != null && livrosExistentes.Any())
                 throw new Exception("Não é possivel atualizar o livro, já existe um livro cadastrado com esse titulo");
 
             if (livro.DataCadastro == new DateTime())
                 livro.DataCadastro = livroBase.DataCadastro;
 
-            _ = _livroRepository.UpdateAsync(livro);
+            await _livroRepository.UpdateAsync(livro);
         }
 
         public async Task DeleteAsync(long id)
         {
             var livroBase = await GetByIdAsync(id);
+
             if (livroBase == null)
                 throw new Exception("Não é possivel deletar o livro, o livro não está cadastrado");
 
-            _ = _livroRepository.DeleteByIdAsync(id);
+            await _livroRepository.DeleteByIdAsync(id);
         }
 
         public async Task<IList<Livro>> GetByTituloAsync(string titulo)
@@ -87,13 +90,14 @@ namespace Service.ModelsService
         public async Task AlugarAsync(Livro livro)
         {
             var livroBase = await GetByIdAsync(livro.Id);
+            var cliente = await _clienteService.GetByIdAsync((long) livro.IdCliente);
+
             if (livroBase == null)
                 throw new Exception("Não é possivel alugar o livro, o livro não está cadastrado");
 
             if (livroBase.Alugado)
                 throw new Exception("Não é possivel alugar o livro, o livro está alugado");
 
-            var cliente = await _clienteService.GetByIdAsync((long) livro.IdCliente);
             if (cliente == null)
                 throw new Exception("Não é possivel alugar o livro, o cliente não está cadastrado");
 
@@ -101,7 +105,7 @@ namespace Service.ModelsService
             livroBase.Cliente = cliente;
             livroBase.IdCliente = cliente.Id;
 
-            _ = _livroRepository.UpdateAsync(livroBase);
+            await _livroRepository.UpdateAsync(livroBase);
         }
 
         public async Task<IList<Livro>> GetLivrosAlugadosByCliente(long idCliente)

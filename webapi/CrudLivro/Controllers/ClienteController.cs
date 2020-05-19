@@ -53,14 +53,14 @@ namespace CrudLivro.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save([FromBody] Cliente cliente)
+        public async Task<ActionResult> Save([FromBody] Cliente cliente)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState.Values.Select(x => x.Errors));
 
-                _clienteService.Save(cliente);
+                await _clienteService.SaveAsync(cliente);
 
                 return StatusCode(201, "Cliente adicionado com sucesso");
             }
@@ -83,7 +83,7 @@ namespace CrudLivro.Controllers
                 if (clienteBase == null)
                     return NotFound("Cliente não encontrado");
 
-                _clienteService.Update(cliente);
+                await _clienteService.UpdateAsync(cliente);
 
                 return Ok("Cliente atualizado com sucesso");
             }
@@ -103,7 +103,7 @@ namespace CrudLivro.Controllers
                 if (livro == null)
                     return NotFound("Cliente não encontrado");
 
-                _clienteService.Delete(id);
+                await _clienteService.DeleteAsync(id);
 
                 return StatusCode(201, "Cliente deletado com sucesso");
             }

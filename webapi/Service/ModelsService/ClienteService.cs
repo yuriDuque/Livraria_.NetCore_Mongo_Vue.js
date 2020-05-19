@@ -1,5 +1,6 @@
 ﻿using Domain.Models;
 using RepositoryMongo.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,9 +11,9 @@ namespace Service.ModelsService
     {
         IList<Cliente> GetAll();
         Task<Cliente> GetByIdAsync(long idCliente);
-        void Save(Cliente cliente);
-        void Update(Cliente cliente);
-        void Delete(long id);        
+        Task SaveAsync(Cliente cliente);
+        Task UpdateAsync(Cliente cliente);
+        Task DeleteAsync(long id);        
     }
 
     public class ClienteService : IClienteService
@@ -34,20 +35,47 @@ namespace Service.ModelsService
             return _clienteRepository.FindByIdAsync(idCliente);
         }
 
-        public void Save(Cliente cliente)
+        public async Task<Cliente> GetByCPF(string CPF)
         {
-            cliente.DataCadastro = System.DateTime.Now;
-
-            _clienteRepository.Save(cliente);
+            return (await _clienteRepository.FilterByAsync(x => x.CPF.Equals(CPF))).FirstOrDefault();            
         }
 
-        public void Update(Cliente cliente)
+        public async Task SaveAsync(Cliente cliente)
         {
+            var clienteBase = await GetByCPF(cliente.CPF);
+
+            if (clienteBase != null)
+                throw new Exception("Não é possivel salvar o cliente, o CPF já está cadastrado");
+
+            cliente.DataCadastro = DateTime.Now;
+
+            await _clienteRepository.SaveAsync(cliente);
+        }
+
+        public async Task UpdateAsync(Cliente cliente)
+        {
+            var clienteBase = await GetByIdAsync(cliente.Id);
+            var clienteCPF = await GetByCPF(cliente.CPF);
+
+            if (clienteBase == null)
+                throw new Exception("Não é possivel atualizar o cliente, o cliente não está cadastrado");
+
+            if (clienteCPF != null && clienteCPF.Id != cliente.Id)
+                throw new Exception("Não é possivel alterar o cliente, o CPF já está cadastrado");
+
+            if (cliente.DataCadastro == new DateTime())
+                cliente.DataCadastro = clienteBase.DataCadastro;
+
             _clienteRepository.Update(cliente);
         }
 
-        public void Delete(long id)
+        public async Task DeleteAsync(long id)
         {
+            var clienteBase = await GetByIdAsync(id);
+
+            if (clienteBase == null)
+                throw new Exception("Não é possivel atualizar o cliente, o cliente não está cadastrado");
+
             _clienteRepository.DeleteById(id);
         }
     }
