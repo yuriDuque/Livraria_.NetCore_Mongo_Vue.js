@@ -6,10 +6,6 @@ namespace Domain.Utils
 {
     public interface IDocument
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.Int64)]
         long Id { get; set; }
-
-        DateTime CreatedAt { get; }
     }
 }

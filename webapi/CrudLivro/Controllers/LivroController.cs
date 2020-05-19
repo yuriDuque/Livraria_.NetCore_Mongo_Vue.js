@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service.ModelsService;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CrudLivro.Controllers
 {
@@ -31,11 +32,11 @@ namespace CrudLivro.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetById(long id)
+        public async Task<ActionResult> GetById(long id)
         {
             try
             {
-                var livro = _livroService.GetById(id);
+                var livro = await _livroService.GetByIdAsync(id);
 
                 if (livro == null)
                     return NotFound("Livro não encontrado");
@@ -49,14 +50,14 @@ namespace CrudLivro.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save([FromBody] Livro livro)
+        public async Task<ActionResult> Save([FromBody] Livro livro)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState.Values.Select(x => x.Errors));
 
-                _livroService.Save(livro);
+                await _livroService.SaveAsync(livro);
 
                 return StatusCode(201, "Livro adicionado com sucesso");
             }
@@ -67,19 +68,19 @@ namespace CrudLivro.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update([FromBody] Livro livro, long id)
+        public async Task<ActionResult> Update([FromBody] Livro livro, long id)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState.Values.Select(x => x.Errors));
 
-                var livroBase = _livroService.GetById(id);
+                var livroBase = await _livroService.GetByIdAsync(id);
 
                 if (livroBase == null)
                     return NotFound("Livro não encontrado");
 
-                _livroService.Update(livro);
+                await _livroService.UpdateAsync(livro);
 
                 return Ok("Livro atualizado com sucesso");
             }
@@ -90,22 +91,35 @@ namespace CrudLivro.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(long id)
+        public async Task<ActionResult> Delete(long id)
         {
             try
             {
-                var livro = _livroService.GetById(id);
+                await _livroService.DeleteAsync(id);
 
-                if (livro == null)
-                    return NotFound("Livro não encontrado");
-
-                _livroService.Delete(id);
-
-                return StatusCode(201, "Livro deletado com sucesso");
+                return StatusCode(200, "Livro deletado com sucesso");
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "Erro ao deletar, " + ex.Message);
+            }
+        }
+
+        [HttpPost("alugar")]
+        public ActionResult Alugar([FromBody] Livro livro)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState.Values.Select(x => x.Errors));
+
+                _livroService.AlugarAsync(livro);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Erro ao atualizar, " + ex.Message);
             }
         }
     }

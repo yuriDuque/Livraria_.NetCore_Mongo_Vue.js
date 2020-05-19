@@ -11,10 +11,13 @@ namespace RepositoryMongo.Repository
     {
         IQueryable<TDocument> GetAll();
 
-        IEnumerable<TDocument> FilterBy(
+        IList<TDocument> FilterBy(
             Expression<Func<TDocument, bool>> filterExpression);
 
-        IEnumerable<TProjected> FilterBy<TProjected>(
+        Task<IList<TDocument>> FilterByAsync(
+            Expression<Func<TDocument, bool>> filterExpression);
+
+        IList<TProjected> FilterBy<TProjected>(
             Expression<Func<TDocument, bool>> filterExpression,
             Expression<Func<TDocument, TProjected>> projectionExpression);
 
@@ -41,7 +44,7 @@ namespace RepositoryMongo.Repository
         void DeleteOne(Expression<Func<TDocument, bool>> filterExpression);
 
         Task DeleteOneAsync(Expression<Func<TDocument, bool>> filterExpression);
-
+        
         void DeleteById(long id);
 
         Task DeleteByIdAsync(long id);

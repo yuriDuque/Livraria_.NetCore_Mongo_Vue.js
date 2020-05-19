@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service.ModelsService;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CrudLivro.Controllers
 {
@@ -12,13 +13,14 @@ namespace CrudLivro.Controllers
     public class ClienteController : ControllerBase
     {
         private readonly IClienteService _clienteService;
+        private readonly ILivroService _livroService;
 
-        public ClienteController(IClienteService clienteService)
+        public ClienteController(IClienteService clienteService, ILivroService livroService)
         {
             _clienteService = clienteService;
+            _livroService = livroService;
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -33,11 +35,11 @@ namespace CrudLivro.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetById(long id)
+        public async Task<ActionResult> GetById(long id)
         {
             try
             {
-                var livro = _clienteService.GetById(id);
+                var livro = await _clienteService.GetByIdAsync(id);
 
                 if (livro == null)
                     return NotFound("Cliente não encontrado");
@@ -69,14 +71,14 @@ namespace CrudLivro.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update([FromBody] Cliente cliente, long id)
+        public async Task<ActionResult> Update([FromBody] Cliente cliente, long id)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState.Values.Select(x => x.Errors));
 
-                var clienteBase = _clienteService.GetById(id);
+                var clienteBase = await _clienteService.GetByIdAsync(id);
 
                 if (clienteBase == null)
                     return NotFound("Cliente não encontrado");
@@ -92,11 +94,11 @@ namespace CrudLivro.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(long id)
+        public async Task<ActionResult> Delete(long id)
         {
             try
             {
-                var livro = _clienteService.GetById(id);
+                var livro = await _clienteService.GetByIdAsync(id);
 
                 if (livro == null)
                     return NotFound("Cliente não encontrado");
@@ -104,6 +106,19 @@ namespace CrudLivro.Controllers
                 _clienteService.Delete(id);
 
                 return StatusCode(201, "Cliente deletado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Erro ao deletar, " + ex.Message);
+            }
+        }
+
+        [HttpGet("livros-alugados/{id}")]
+        public async Task<ActionResult> Livros(long id)
+        {
+            try
+            {
+                return Ok(await _livroService.GetLivrosAlugadosByCliente(id));
             }
             catch (Exception ex)
             {

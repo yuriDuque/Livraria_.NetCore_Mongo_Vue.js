@@ -2,16 +2,17 @@
 using RepositoryMongo.Repository;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Service.ModelsService
 {
     public interface IClienteService
     {
         IList<Cliente> GetAll();
-        Cliente GetById(long id);
+        Task<Cliente> GetByIdAsync(long idCliente);
         void Save(Cliente cliente);
         void Update(Cliente cliente);
-        void Delete(long id);
+        void Delete(long id);        
     }
 
     public class ClienteService : IClienteService
@@ -28,13 +29,15 @@ namespace Service.ModelsService
             return _clienteRepository.GetAll().ToList();
         }
 
-        public Cliente GetById(long id)
+        public Task<Cliente> GetByIdAsync(long idCliente)
         {
-            return _clienteRepository.FindById(id);
+            return _clienteRepository.FindByIdAsync(idCliente);
         }
 
         public void Save(Cliente cliente)
         {
+            cliente.DataCadastro = System.DateTime.Now;
+
             _clienteRepository.Save(cliente);
         }
 

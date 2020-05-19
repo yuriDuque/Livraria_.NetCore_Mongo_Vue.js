@@ -59,19 +59,25 @@ namespace RepositoryMongo.Repository
 
         // var people = _peopleRepository.FilterBy(filter => filter.FirstName != "test");
         //
-        public virtual IEnumerable<TDocument> FilterBy(
+        public virtual IList<TDocument> FilterBy(
             Expression<Func<TDocument, bool>> filterExpression)
         {
-            return _collection.Find(filterExpression).ToEnumerable();
+            return _collection.Find(filterExpression).ToList();
+        }
+
+        public async virtual Task<IList<TDocument>> FilterByAsync(
+            Expression<Func<TDocument, bool>> filterExpression)
+        {
+            return (await _collection.FindAsync(filterExpression)).ToList();
         }
 
         // var people = _peopleRepository.FilterBy(filter => filter.FirstName != "test", projection => projection.FirstName);
         // o projection serve como um select, retornando apenas os campos em que foram solicitados em vez do objeto inteiro
-        public virtual IEnumerable<TProjected> FilterBy<TProjected>(
+        public virtual IList<TProjected> FilterBy<TProjected>(
             Expression<Func<TDocument, bool>> filterExpression,
             Expression<Func<TDocument, TProjected>> projectionExpression)
         {
-            return _collection.Find(filterExpression).Project(projectionExpression).ToEnumerable();
+            return _collection.Find(filterExpression).Project(projectionExpression).ToList();
         }
 
         public virtual TDocument FindOne(Expression<Func<TDocument, bool>> filterExpression)
