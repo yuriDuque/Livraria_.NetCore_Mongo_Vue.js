@@ -1,4 +1,4 @@
-# livraria
+# frontend
 
 ## Project setup
 ```
