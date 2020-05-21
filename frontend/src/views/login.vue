@@ -20,7 +20,7 @@
 
       <label v-if="error" class="label-erro">{{error}}</label>
 
-      <b-button class="mt-3 w-100 backgroud-primary" type="submit">Entrar</b-button>
+      <b-button class="mt-3 w-100 backgroud-primary b" type="submit">Entrar</b-button>
     </b-form>
   </div>
 </template>
