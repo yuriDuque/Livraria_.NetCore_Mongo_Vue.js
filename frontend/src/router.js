@@ -25,8 +25,8 @@ export default new Router({
       component: admin
     },
     {
-      path: '/livraria',
-      name: 'livraria',
+      path: '/usuario',
+      name: 'usuario',
       component: user
     },
   ]
