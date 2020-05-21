@@ -72,7 +72,7 @@ export default {
 
 .container {
   background-color: white;
-  width: 400px;
+  width: 350px;
   border-radius: 15px;
   color: #52536a;
 }
