@@ -1,0 +1,23 @@
+
+/* input */
+.form-control:focus{
+    color: #495057;
+    background-color: #fff;
+    border-color: #4b3ca2;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(75, 60, 162, 0.25);
+}
+
+/* checkbox */
+.custom-control-input:checked ~ .custom-control-label::before{
+    color: #fff;
+    border-color: #4b3ca2 !important;
+    background-color: #4b3ca2 !important;
+    box-shadow: 0 0 0 0.2rem rgb(75, 60, 162, 0.25);
+}
+
+/* label de erro */
+.label-erro{
+    color: red;
+    font-size: small;
+}
