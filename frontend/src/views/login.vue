@@ -30,8 +30,8 @@ export default {
   data() {
     return {
       form: {
-        login: "",
-        senha: "",
+        login: "admin",
+        senha: "admin",
         checked: []
       },
 
