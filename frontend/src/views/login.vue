@@ -1,5 +1,5 @@
 <template>
-  <div class="tela-inteira centralizar backgroud">
+  <div class="tela-inteira centralizar">
     <b-form @submit="onSubmit" class="container p-3">
       <h4>Login</h4>
       <p>Seja bem vindo, acesse sua conta!</p>
@@ -53,10 +53,6 @@ export default {
 </script>
 
 <style scoped>
-.backgroud {
-  background-color: rgb(237, 237, 239);
-}
-
 .tela-inteira {
   height: 100vh;
 }

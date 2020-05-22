@@ -1,4 +1,5 @@
 <template>
+  <div class="d-flex ">
     <div class="menu backgroud-secundary">
       <div class="titulo-menu d-flex justify-content-between">
         <h2 class="titulo mb-5">Livraria</h2>
@@ -17,6 +18,10 @@
         </p>
       </div>
     </div>
+    <div class="d-block">
+      <router-view></router-view>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -27,11 +32,16 @@ export default {
     return {
       titulo: "Livraria",
       itensMenu: [
-        { label: "Livros", icon: "book", rota: "login", selecionado: true },
+        {
+          label: "Livros",
+          icon: "book",
+          rota: "lista-livros",
+          selecionado: true
+        },
         {
           label: "Clientes",
           icon: "person",
-          rota: "usuario",
+          rota: "lista-usuarios",
           selecionado: false
         }
       ]
