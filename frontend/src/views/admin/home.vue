@@ -1,22 +1,22 @@
 <template>
-  <div class="menu backgroud-secundary">
-    <div class="titulo-menu d-flex justify-content-between">
-      <h2 class="titulo mb-5">Livraria</h2>
-      <b-icon class="icon icon-button h2" icon="arrow-right"></b-icon>
-    </div>
+    <div class="menu backgroud-secundary">
+      <div class="titulo-menu d-flex justify-content-between">
+        <h2 class="titulo mb-5">Livraria</h2>
+        <b-icon class="icon icon-button h2" icon="arrow-right"></b-icon>
+      </div>
 
-    <div
-      v-for="(item, index) in itensMenu"
-      :key="index"
-      :class="item.selecionado ? 'item-menu item-menu-selecionado color-primary' : 'item-menu'"
-      @click="selecionarItem(index)"
-    >
-      <p class="label-menu d-flex">
-        <b-icon class="icon h4" :icon="item.icon"></b-icon>
-        {{item.label}}
-      </p>
+      <div
+        v-for="(item, index) in itensMenu"
+        :key="index"
+        :class="item.selecionado ? 'item-menu item-menu-selecionado color-primary' : 'item-menu'"
+        @click="selecionarItem(index)"
+      >
+        <p class="label-menu d-flex">
+          <b-icon class="icon h4" :icon="item.icon"></b-icon>
+          {{item.label}}
+        </p>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -28,7 +28,12 @@ export default {
       titulo: "Livraria",
       itensMenu: [
         { label: "Livros", icon: "book", rota: "login", selecionado: true },
-        { label: "Clientes", icon: "person", rota: "usuario", selecionado: false }
+        {
+          label: "Clientes",
+          icon: "person",
+          rota: "usuario",
+          selecionado: false
+        }
       ]
     };
   },

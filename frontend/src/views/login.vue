@@ -41,7 +41,6 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
-      debugger;
 
       if (this.form.login === "admin" && this.form.senha === "admin") {
         this.$router.push({ name: "admin" });

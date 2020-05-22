@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="app">
+    <div id="app" class="backgroud">
         <router-view></router-view>
     </div>
 </template>
@@ -9,3 +9,7 @@
         name: 'app'
     }
 </script>
+
+<style>
+
+</style>
