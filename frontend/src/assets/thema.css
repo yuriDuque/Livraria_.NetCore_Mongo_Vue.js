@@ -6,19 +6,21 @@
 .backgroud-primary{
     background-color: #4f3ea2;
 }
-    .backgroud-primary:hover{
+    .backgroud-primary-hover:hover{
         background-color: #413291;
     }
-
-    .backgroud-primary:active{
+    .backgroud-primary-hover:active{
         background-color: #413291;
     }
-
-    .backgroud-primary:focus{
+    .backgroud-primary-hover:focus{
         background-color: #413291;
         border-color: #4b3ca2;
         box-shadow: 0 0 0 0.2rem rgb(75, 60, 162, 0.25) !important;
     }
+
+.backgroud-secundary{
+    background-color: #2c2483;
+}
 
 .b{
     font-weight: bold;
