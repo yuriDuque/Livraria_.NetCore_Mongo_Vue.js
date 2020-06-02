@@ -18,7 +18,7 @@
         </p>
       </div>
     </div>
-    <div class="d-block">
+    <div class="d-block container">
       <router-view></router-view>
     </div>
   </div>

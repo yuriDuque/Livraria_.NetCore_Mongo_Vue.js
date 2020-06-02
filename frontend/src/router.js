@@ -6,10 +6,10 @@ import login from './views/login.vue'
 //admin
 import admin from './views/admin/index.vue'
 import listaLivros from './views/admin/livro/listaLivros.vue'
-import listaUsuarios from './views/user/usuario/listaUsuarios.vue'
+import listaUsuarios from './views/admin/usuario/listaUsuarios.vue'
 
 //user
-import user from './views/user/index.vue'
+import user from './views/user/usuario/index.vue'
 
 Vue.use(Router)
 
